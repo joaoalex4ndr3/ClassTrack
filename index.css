@@ -1,0 +1,444 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+ 
+body {
+    background: #e8f4fc;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+ 
+/* ===================== AURORA BACKGROUND ===================== */
+ 
+.bg-aurora {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: #f0f8fd;
+    overflow: hidden;
+}
+ 
+.aurora-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.35;
+}
+ 
+.orb1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #bde8f8 0%, transparent 70%);
+    top: -150px;
+    left: -150px;
+    animation: driftA 20s ease-in-out infinite;
+}
+ 
+.orb2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #c8eefb 0%, transparent 70%);
+    bottom: -120px;
+    right: -120px;
+    animation: driftB 26s ease-in-out infinite;
+}
+ 
+.orb3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #d6f2ff 0%, transparent 70%);
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: driftC 32s ease-in-out infinite;
+}
+ 
+@keyframes driftA {
+    0%, 100% { transform: translate(0, 0); }
+    50%       { transform: translate(30px, 20px); }
+}
+ 
+@keyframes driftB {
+    0%, 100% { transform: translate(0, 0); }
+    50%       { transform: translate(-25px, -20px); }
+}
+ 
+@keyframes driftC {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(-25px); }
+}
+ 
+/* ===================== HEADER ===================== */
+ 
+header {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(127, 200, 227, 0.35);
+    box-shadow: 0 2px 20px rgba(94, 185, 224, 0.15);
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 30px;
+}
+ 
+.header-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+ 
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+ 
+#logo {
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    height: 105px;
+    width: 155px;
+    filter: drop-shadow(0 2px 8px rgba(94, 185, 224, 0.25));
+}
+ 
+#logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 14px rgba(94, 185, 224, 0.45));
+}
+ 
+.header-accent-line {
+    width: 60px;
+    height: 3px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #7ec8e3, #bfe9ff, #7ec8e3);
+    background-size: 200% 100%;
+    animation: shimmerLine 3s ease-in-out infinite;
+}
+ 
+@keyframes shimmerLine {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+ 
+/* ===================== MAIN ===================== */
+ 
+main {
+    position: relative;
+    z-index: 5;
+    min-height: calc(100vh - 90px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+ 
+/* ===================== CARD (formulário) ===================== */
+ 
+.card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 34px 32px;
+  border: 1px solid #d7edf8;
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(31, 59, 77, 0.08);
+  text-align: center;
+}
+ 
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+ 
+.role-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+ 
+.role-buttons button {
+    height: 70px;
+    border: none;
+    border-radius: 12px;
+    background: #d9d9d9;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+ 
+.role-buttons button:hover {
+    background: #bfe9ff;
+    transform: scale(1.03);
+}
+ 
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+ 
+.tabs button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+ 
+.tabs button.active {
+    background: #bfe9ff;
+    color: #1f3b4d;
+}
+ 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+ 
+input {
+  padding: 14px 15px;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+  outline: none;
+  background: #fafafa;
+  color: #333;
+  font-size: 15px;
+  transition: 0.25s;
+}
+ 
+input:focus {
+  border-color: #8fd3f4;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(191, 233, 255, 0.45);
+}
+ 
+form button {
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #bfe9ff;
+  color: #1f3b4d;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+form button:hover {
+  background: #a9dff8;
+}
+ 
+#selected-role {
+    background: #eee;
+    padding: 10px;
+    border-radius: 8px;
+    color: #333;
+    font-weight: bold;
+}
+ 
+.error {
+    color: #d10000;
+    font-size: 14px;
+}
+ 
+.success {
+    color: #008000;
+    font-size: 14px;
+}
+ 
+.hidden {
+    display: none;
+}
+ 
+/* ===================== CHOICE SECTION ===================== */
+ 
+#choice-section {
+    width: 100%;
+    max-width: 900px;
+}
+ 
+.choice-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #1f3b4d;
+    position: relative;
+    top: -105px;
+    text-shadow: 0 1px 4px rgba(255,255,255,0.7);
+}
+ 
+.roles-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    justify-items: center;
+}
+ 
+.role-card {
+    width: 100%;
+    max-width: 280px;
+    height: 180px;
+    border-radius: 18px;
+    background-color: #bfe9ff;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.4s;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ 
+.card-image {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.95;
+}
+ 
+.role-card:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+ 
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    background: rgba(0,0,0,0.15);
+}
+ 
+.overlay h3 {
+    color: white;
+    font-size: 34px;
+    font-weight: bold;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    z-index: 3;
+}
+ 
+.aluno {
+    background-image:
+    linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
+    url('./Assets/estudanteClass.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+ 
+.professor {
+    background-image:
+    linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
+    url('./Assets/professorClass.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+ 
+.direcao {
+    background-image:
+    linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
+    url('./Assets/direcaoClass.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+ 
+/* ===================== RESPONSIVE ===================== */
+ 
+@media (max-width: 768px) {
+ 
+    header {
+        justify-content: center;
+    }
+ 
+    .header-left {
+        position: static;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+ 
+    #logo {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+    }
+ 
+    main {
+        padding: 25px 15px;
+        align-items: flex-start;
+    }
+ 
+    .choice-title {
+        font-size: 26px;
+        margin-top: 20px;
+        margin-bottom: 25px;
+        top: 0;
+    }
+ 
+    .roles-container {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+ 
+    .direcao {
+        grid-column: auto;
+    }
+ 
+    .role-card {
+        max-width: 100%;
+        width: 100%;
+        height: 170px;
+    }
+ 
+    .overlay h3 {
+        font-size: 30px;
+    }
+ 
+    .card {
+        max-width: 100%;
+        padding: 22px;
+    }
+ 
+    .tabs {
+        flex-direction: column;
+    }
+ 
+    input,
+    form button {
+        font-size: 15px;
+    }
+}
+ 
+@media (max-width: 480px) {
+    .card {
+        padding: 22px;
+    }
+ 
+    header h1 {
+        font-size: 24px;
+    }
+}
