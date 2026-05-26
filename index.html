@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login e Cadastro</title>
+    <title>ClassTrack — Início</title>
     <link rel="stylesheet" href="index.css" />
 </head>
  
@@ -18,67 +18,122 @@
  
     <header>
         <div class="header-inner">
-            <a href="Lading.html" class="logo-link">
-                <img src="Assets\logoClass.png" alt="Logo do Projeto" id="logo">
+            <a href="index.html" class="logo-link">
+                <img src="Assets/logoClass.png" alt="Logo ClassTrack" id="logo">
             </a>
             <div class="header-accent-line"></div>
         </div>
     </header>
  
     <main>
-        <section id="choice-section">
-            <h2 class="choice-title">Escolha seu tipo de acesso</h2>
-            <div class="roles-container">
-                <div class="role-card aluno" onclick="selectRole('Aluno')">
-                    <div class="overlay">
-                        <h3>Aluno</h3>
-                    </div>
+ 
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Bem-vindo ao <span class="highlight">ClassTrack</span></h1>
+                <p class="hero-desc">
+                    Um sistema desenvolvido por estudantes para estudantes. Acompanhe sua frequência,
+                    consulte suas notas e fique sempre por dentro do seu desempenho escolar — tudo em um só lugar.
+                </p>
+                <a href="Acesso.html" class="cta-btn">Acessar o sistema</a>
+            </div>
+ 
+            <div class="hero-visual">
+                <div class="visual-card vc1">
+                    <span class="vc-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="2" width="6" height="4" rx="1"/><path d="M4 6h16a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/>
+                        </svg>
+                    </span>
+                    <span class="vc-label">Frequência</span>
                 </div>
-                <div class="role-card professor" onclick="selectRole('Professor')">
-                    <div class="overlay">
-                        <h3>Professor</h3>
-                    </div>
+                <div class="visual-card vc2">
+                    <span class="vc-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#bfe9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                        </svg>
+                    </span>
+                    <span class="vc-label">Notas</span>
                 </div>
-                <div class="role-card direcao" onclick="selectRole('Direção')">
-                    <div class="overlay">
-                        <h3>Direção</h3>
-                    </div>
+                <div class="visual-card vc3">
+                    <span class="vc-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
+                        </svg>
+                    </span>
+                    <span class="vc-label">Desempenho</span>
                 </div>
             </div>
         </section>
  
-        <section id="form-section" class="card hidden">
-            <p id="selected-role"></p>
-            <div class="tabs">
-                <button id="login-tab" class="active" onclick="showLogin()">Login</button>
-                <button id="register-tab" onclick="showRegister()">Cadastro</button>
+        <section class="features">
+            <h2 class="section-title">O que o ClassTrack oferece</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
+                    <h3>Controle de Frequência</h3>
+                    <p>Acompanhe sua presença em tempo real e evite faltas que comprometam seu desempenho.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#bfe9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/>
+                        </svg>
+                    </div>
+                    <h3>Notas e Avaliações</h3>
+                    <p>Visualize suas notas por disciplina e acompanhe sua evolução ao longo do semestre.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3>Painel do Professor</h3>
+                    <p>Professores podem registrar presenças e lançar notas de forma rápida e organizada.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#bfe9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                    </div>
+                    <h3>Gestão da Direção</h3>
+                    <p>A direção tem uma visão completa do rendimento geral da instituição.</p>
+                </div>
             </div>
- 
-            <form id="login-form">
-                <h2>Login</h2>
-                <input type="email" id="login-email" placeholder="E-mail Gmail" />
-                <input type="password" id="login-password" placeholder="Senha" />
-                <p class="error" id="login-error"></p>
-                <button type="submit">Entrar</button>
-            </form>
- 
-            <form id="register-form" class="hidden">
-                <h2>Cadastro</h2>
-                <input type="text" id="cpf" placeholder="CPF" maxlength="14" />
-                <input type="text" id="phone" placeholder="Número de telefone" />
-                <input type="text" id="fullname" placeholder="Nome completo" />
-                <input type="email" id="email" placeholder="E-mail Gmail" />
-                <input type="password" id="password" placeholder="Senha" />
-                <input type="password" id="confirm-password" placeholder="Confirmar senha" />
-                <p class="error" id="register-error"></p>
-                <p class="success" id="register-success"></p>
-                <button type="submit">Cadastrar</button>
-            </form>
         </section>
+ 
+        <section class="about">
+            <div class="about-card">
+                <div class="about-tag">Sobre o projeto</div>
+                <h2>Feito por quem vive a escola</h2>
+                <p>
+                    O ClassTrack nasceu dentro da sala de aula, a partir de uma necessidade real vivida diariamente por estudantes.
+                    Desenvolvido por alunos do <strong>SENAI Santa Rosália</strong>, o projeto foi criado com o propósito de tornar o acompanhamento escolar mais moderno,
+                    simples e acessível para toda a comunidade acadêmica — alunos, professores e direção.
+                </p>
+                <p>
+                    Mais do que um sistema, o ClassTrack busca evitar que estudantes sejam surpreendidos por faltas excessivas ou dificuldades no desempenho escolar.
+                    Nossa missão é oferecer uma plataforma prática, intuitiva e eficiente, permitindo um acompanhamento mais transparente e organizado da vida escolar.
+                </p>
+            </div>
+        </section>
+ 
+        <section class="cta-section">
+            <h2>Pronto para começar?</h2>
+            <p>Acesse o sistema e escolha seu perfil de entrada.</p>
+            <a href="Acesso.html" class="cta-btn">Entrar agora</a>
+        </section>
+ 
     </main>
  
-    <script src="index.js"></script>
+    <footer>
+        <p>© 2025 ClassTrack — Desenvolvido por estudantes do SENAI Santa Rosália</p>
+    </footer>
+ 
 </body>
- 
 </html>
- 

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ClassTrack — Professor</title>
+<link rel="stylesheet" href="/Professor/Professor.css"/>
+<script>
+    // Verificar se o usuário está logado antes de carregar a página
+    document.addEventListener('DOMContentLoaded', function() {
+        const loggedUser = localStorage.getItem('loggedUser');
+        
+        if (!loggedUser) {
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        const userData = JSON.parse(loggedUser);
+        
+        if (userData.role !== 'Professor') {
+            if (userData.role === 'Aluno') {
+                window.location.href = 'Aluno.html';
+            } else if (userData.role === 'Direção') {
+                window.location.href = 'Direcao.html';
+            } else {
+                window.location.href = 'index.html';
+            }
+            return;
+        }
+        
+        // Armazenar dados do professor logado globalmente
+        window.professorLogado = userData;
+        console.log(`Professor logado: ${userData.nome}`);
+    });
+</script>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="logo"><span><b>Class</b>Track</span></div>
+  <div class="prof-chip">
+    <div class="avatar" id="prof-avatar">CM</div>
+    <div>
+      <div class="prof-name" id="prof-name">Carlos Mendes</div>
+      <div class="prof-role">Professor</div>
+    </div>
+  </div>
+  <nav>
+    <a class="active" onclick="go('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <span>Início</span>
+    </a>
+    <a onclick="go('turmas')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Minhas Turmas</span>
+    </a>
+    <a onclick="go('frequencias')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Frequências</span>
+    </a>
+    <a onclick="go('notas')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+      <span>Notas</span>
+    </a>
+    <a onclick="go('comportamentos')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span>Ocorrências</span>
+    </a>
+    <a onclick="go('alertas')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span>Alertas</span>
+      <span class="nav-badge" id="nav-badge">0</span>
+    </a>
+  </nav>
+  <div class="version">ClassTrack v1.0</div>
+</aside>
+
+<!-- TOPBAR -->
+<header id="topbar">
+  <div class="topbar-left">
+    <h2 id="page-title">Início</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="search-container">
+      <input type="text" id="global-search" placeholder="🔍 Buscar aluno..." class="search-input">
+    </div>
+    <div class="notif-btn" onclick="go('alertas')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span id="alerta-count">0</span>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="logout()" style="margin-left: 10px;">
+      🚪 Sair
+    </button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- ===== DASHBOARD ===== -->
+  <div id="page-dashboard" class="page active">
+    <div class="stat-row" id="dash-stats"></div>
+    <div class="dash-grid">
+      <div class="panel">
+        <div class="panel-head"><h3>📅 Minhas Disciplinas / Turmas</h3></div>
+        <div class="panel-body" id="dash-disc"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>⚠️ Alertas Recentes</h3><button class="btn btn-sm btn-outline" onclick="go('alertas')">Ver todos</button></div>
+        <div class="panel-body" id="dash-alertas"></div>
+      </div>
+    </div>
+    <div class="mt20">
+      <div class="panel">
+        <div class="panel-head"><h3>🚨 Últimas Ocorrências Registradas</h3><button class="btn btn-sm btn-outline" onclick="go('comportamentos')">Ver todas</button></div>
+        <div class="panel-body" id="dash-comp"></div>
+      </div>
+    </div>
+    <div class="mt20">
+      <div class="panel">
+        <div class="panel-head"><h3>🏆 Top Alunos (Melhores Médias)</h3></div>
+        <div class="panel-body" id="dash-top-alunos"></div>
+      </div>
+    </div>
+    <div class="mt20">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>⚠️ Central de Alertas</h3>
+          <button class="btn btn-sm btn-primary" id="btn-auto-alerta">
+            🤖 Gerar Alertas Automáticos
+          </button>
+        </div>
+        <div class="panel-body" id="dash-alertas-central"></div>
+      </div>
+    </div>
+    <div class="mt20">
+      <div class="panel">
+        <div class="panel-head"><h3>⚠️ Alunos Críticos</h3></div>
+        <div class="panel-body" id="dash-criticos"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TURMAS ===== -->
+  <div id="page-turmas" class="page">
+    <div class="panel">
+      <div class="panel-head"><h3>Minhas Turmas e Disciplinas</h3></div>
+      <div class="tbl-wrap">
+        <table id="tbl-turmas">
+          <thead><tr><th>Turma</th><th>Ano</th><th>Turno</th><th>Disciplina</th><th>Alunos</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mt20" id="turma-alunos-section" style="display:none">
+      <div class="panel">
+        <div class="panel-head">
+          <h3 id="turma-alunos-title">Alunos da Turma</h3>
+          <button class="btn btn-sm btn-outline" onclick="document.getElementById('turma-alunos-section').style.display='none'">Fechar</button>
+        </div>
+        <div class="tbl-wrap">
+          <table id="tbl-alunos-turma">
+            <thead><tr><th>#</th><th>Nome</th><th>Status</th><th>Faltas</th><th>Média</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FREQUÊNCIAS ===== -->
+  <div id="page-frequencias" class="page">
+    <div class="search-bar">
+      <button class="btn btn-primary" onclick="openModal('modal-freq')">+ Registrar Frequência</button>
+      <button class="btn btn-navy" onclick="openModal('modal-chamada')">📋 Chamada em Lote</button>
+      <select id="filtro-turma-freq" onchange="renderFreq()">
+        <option value="">Todas as turmas</option>
+      </select>
+      <select id="filtro-disc-freq" onchange="renderFreq()">
+        <option value="">Todas disciplinas</option>
+      </select>
+      <select id="filtro-pres" onchange="renderFreq()">
+        <option value="">Todas</option>
+        <option value="true">Presente</option>
+        <option value="false">Ausente</option>
+      </select>
+    </div>
+    <div class="panel"><div class="tbl-wrap">
+      <table id="tbl-freq">
+        <thead><tr><th>Data</th><th>Aluno</th><th>Turma</th><th>Disciplina</th><th>Presença</th><th>Ações</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div></div>
+  </div>
+
+  <!-- ===== NOTAS ===== -->
+  <div id="page-notas" class="page">
+    <div class="search-bar">
+      <button class="btn btn-primary" onclick="openModal('modal-nota')">+ Lançar Nota</button>
+      <select id="filtro-turma-nota" onchange="renderNotas()">
+        <option value="">Todas as turmas</option>
+      </select>
+      <select id="filtro-aluno-nota" onchange="renderNotas()">
+        <option value="">Todos os alunos</option>
+      </select>
+    </div>
+    <div class="panel"><div class="tbl-wrap">
+      <table id="tbl-notas">
+        <thead><tr><th>Aluno</th><th>Turma</th><th>Avaliação</th><th>Nota</th><th>Observação</th><th>Ações</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div></div>
+  </div>
+
+  <!-- ===== COMPORTAMENTOS ===== -->
+  <div id="page-comportamentos" class="page">
+    <div class="search-bar">
+      <button class="btn btn-primary" onclick="openModal('modal-comp')">+ Registrar Ocorrência</button>
+      <select id="filtro-nivel-comp" onchange="renderComp()">
+        <option value="">Todos os níveis</option>
+        <option>Leve</option><option>Moderado</option><option>Grave</option>
+      </select>
+      <select id="filtro-turma-comp" onchange="renderComp()">
+        <option value="">Todas as turmas</option>
+      </select>
+    </div>
+    <div class="panel"><div class="tbl-wrap">
+      <table id="tbl-comp">
+        <thead><tr><th>Data</th><th>Aluno</th><th>Turma</th><th>Nível</th><th>Descrição</th><th>Ações</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div></div>
+  </div>
+
+  <!-- ===== ALERTAS ===== -->
+  <div id="page-alertas" class="page">
+    <div class="search-bar">
+      <select id="filtro-tipo-alerta" onchange="renderAlertas()">
+        <option value="">Todos os tipos</option>
+        <option>Frequência</option><option>Nota</option><option>Comportamento</option>
+      </select>
+      <select id="filtro-risco" onchange="renderAlertas()">
+        <option value="">Todos os riscos</option>
+        <option>Alto</option><option>Médio</option><option>Baixo</option>
+      </select>
+    </div>
+    <div class="panel"><div class="tbl-wrap">
+      <table id="tbl-alertas">
+        <thead><tr><th>Data</th><th>Aluno</th><th>Turma</th><th>Tipo</th><th>Risco</th><th>Descrição</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div></div>
+  </div>
+
+</main>
+
+<!-- ===== MODALS ===== -->
+
+<!-- FREQUÊNCIA INDIVIDUAL -->
+<div class="modal-bg" id="modal-freq"><div class="modal">
+  <div class="modal-head"><h3>Registrar Frequência</h3><button class="modal-close" onclick="closeModal('modal-freq')">×</button></div>
+  <div class="modal-body">
+    <div class="form-grid">
+      <div class="form-group"><label>Turma</label><select id="f-turma" onchange="onTurmaFreqChange()"></select></div>
+      <div class="form-group"><label>Disciplina</label><select id="f-disc"></select></div>
+      <div class="form-group"><label>Aluno</label><select id="f-aluno"></select></div>
+      <div class="form-group"><label>Data</label><input id="f-data" type="date"/></div>
+      <div class="form-group"><label>Presença</label>
+        <select id="f-pres-val"><option value="true">Presente</option><option value="false">Ausente</option></select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-outline" onclick="closeModal('modal-freq')">Cancelar</button>
+    <button class="btn btn-primary" onclick="salvarFreq()">Salvar</button>
+  </div>
+</div></div>
+
+<!-- CHAMADA EM LOTE -->
+<div class="modal-bg" id="modal-chamada"><div class="modal" style="max-width:700px">
+  <div class="modal-head"><h3>📋 Chamada em Lote</h3><button class="modal-close" onclick="closeModal('modal-chamada')">×</button></div>
+  <div class="modal-body">
+    <div class="form-grid">
+      <div class="form-group"><label>Turma</label><select id="ch-turma" onchange="carregarChamada()"></select></div>
+      <div class="form-group"><label>Disciplina</label><select id="ch-disc" onchange="carregarChamada()"></select></div>
+      <div class="form-group"><label>Data</label><input id="ch-data" type="date"/></div>
+    </div>
+    <div id="chamada-lista" style="margin-top:14px"></div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-outline" onclick="closeModal('modal-chamada')">Cancelar</button>
+    <button class="btn btn-primary" onclick="salvarChamada()">Salvar Chamada</button>
+  </div>
+</div></div>
+
+<!-- NOTA -->
+<div class="modal-bg" id="modal-nota"><div class="modal">
+  <div class="modal-head"><h3>Lançar Nota</h3><button class="modal-close" onclick="closeModal('modal-nota')">×</button></div>
+  <div class="modal-body">
+    <div class="form-grid">
+      <div class="form-group"><label>Turma</label><select id="n-turma" onchange="onTurmaNotaChange()"></select></div>
+      <div class="form-group"><label>Aluno</label><select id="n-aluno"></select></div>
+      <div class="form-group"><label>Avaliação (nº)</label><input id="n-aval" type="number" min="1" placeholder="1"/></div>
+      <div class="form-group"><label>Nota (0–10)</label><input id="n-val" type="number" step="0.1" min="0" max="10" placeholder="0.0"/></div>
+      <div class="form-group full"><label>Observação</label><textarea id="n-obs" placeholder="Opcional..."></textarea></div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-outline" onclick="closeModal('modal-nota')">Cancelar</button>
+    <button class="btn btn-primary" onclick="salvarNota()">Salvar</button>
+  </div>
+</div></div>
+
+<!-- COMPORTAMENTO -->
+<div class="modal-bg" id="modal-comp"><div class="modal">
+  <div class="modal-head"><h3>Registrar Ocorrência</h3><button class="modal-close" onclick="closeModal('modal-comp')">×</button></div>
+  <div class="modal-body">
+    <div class="form-grid">
+      <div class="form-group"><label>Turma</label><select id="c-turma" onchange="onTurmaCompChange()"></select></div>
+      <div class="form-group"><label>Aluno</label><select id="c-aluno"></select></div>
+      <div class="form-group"><label>Data</label><input id="c-data" type="date"/></div>
+      <div class="form-group"><label>Nível</label>
+        <select id="c-nivel"><option>Leve</option><option>Moderado</option><option>Grave</option></select>
+      </div>
+      <div class="form-group full"><label>Descrição da Ocorrência</label>
+        <textarea id="c-desc" placeholder="Descreva o ocorrido..."></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-outline" onclick="closeModal('modal-comp')">Cancelar</button>
+    <button class="btn btn-primary" onclick="salvarComp()">Salvar</button>
+  </div>
+</div></div>
+
+<!-- CONFIRM DELETE -->
+<div class="modal-bg" id="modal-confirm"><div class="modal" style="max-width:400px">
+  <div class="modal-head" style="background:var(--danger)"><h3>Confirmar Exclusão</h3><button class="modal-close" onclick="closeModal('modal-confirm')">×</button></div>
+  <div class="modal-body"><p style="font-size:14px">Deseja excluir este registro? Esta ação não pode ser desfeita.</p></div>
+  <div class="modal-foot">
+    <button class="btn btn-outline" onclick="closeModal('modal-confirm')">Cancelar</button>
+    <button class="btn btn-danger" id="btn-confirm-del">Excluir</button>
+  </div>
+</div></div>
+
+<div id="toast"></div>
+<script src="/Professor/professor.js"></script>
+</body>
+</html>

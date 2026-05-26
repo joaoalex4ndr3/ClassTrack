@@ -1,0 +1,473 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+ 
+body {
+    background: #e8f4fc;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+ 
+/* ===================== AURORA BACKGROUND ===================== */
+ 
+.bg-aurora {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: #f0f8fd;
+    overflow: hidden;
+}
+ 
+.aurora-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.35;
+}
+ 
+.orb1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #bde8f8 0%, transparent 70%);
+    top: -150px;
+    left: -150px;
+    animation: driftA 20s ease-in-out infinite;
+}
+ 
+.orb2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #c8eefb 0%, transparent 70%);
+    bottom: -120px;
+    right: -120px;
+    animation: driftB 26s ease-in-out infinite;
+}
+ 
+.orb3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #d6f2ff 0%, transparent 70%);
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: driftC 32s ease-in-out infinite;
+}
+ 
+@keyframes driftA {
+    0%, 100% { transform: translate(0, 0); }
+    50%       { transform: translate(30px, 20px); }
+}
+ 
+@keyframes driftB {
+    0%, 100% { transform: translate(0, 0); }
+    50%       { transform: translate(-25px, -20px); }
+}
+ 
+@keyframes driftC {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(-25px); }
+}
+ 
+/* ===================== HEADER ===================== */
+ 
+header {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(127, 200, 227, 0.35);
+    box-shadow: 0 2px 20px rgba(94, 185, 224, 0.15);
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 30px;
+}
+ 
+.header-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+ 
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+ 
+#logo {
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    height: 105px;
+    width: 155px;
+    filter: drop-shadow(0 2px 8px rgba(94, 185, 224, 0.25));
+}
+ 
+#logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 14px rgba(94, 185, 224, 0.45));
+}
+ 
+.header-accent-line {
+    width: 60px;
+    height: 3px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #7ec8e3, #bfe9ff, #7ec8e3);
+    background-size: 200% 100%;
+    animation: shimmerLine 3s ease-in-out infinite;
+}
+ 
+@keyframes shimmerLine {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+ 
+/* ===================== MAIN ===================== */
+ 
+main {
+    position: relative;
+    z-index: 5;
+    min-height: calc(100vh - 90px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+ 
+/* ===================== CHOICE SECTION ===================== */
+ 
+#choice-section {
+    width: 100%;
+    max-width: 900px;
+}
+ 
+.choice-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #1f3b4d;
+    position: relative;
+    top: -105px;
+    text-shadow: 0 1px 4px rgba(255,255,255,0.7);
+}
+ 
+.roles-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    justify-items: center;
+}
+ 
+.role-card {
+    width: 100%;
+    max-width: 280px;
+    height: 180px;
+    border-radius: 18px;
+    background-color: #bfe9ff;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.4s;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ 
+.role-card:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+ 
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    background: rgba(0,0,0,0.15);
+}
+ 
+.overlay h3 {
+    color: white;
+    font-size: 34px;
+    font-weight: bold;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    z-index: 3;
+}
+ 
+.aluno {
+    background-image:
+    linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
+    url('./Assets/estudanteClass.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+ 
+.professor {
+    background-image:
+    linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
+    url('./Assets/professorClass.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+ 
+.direcao {
+    background-image:
+    linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
+    url('./Assets/direcaoClass.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+ 
+/* ===================== FORM CARD ===================== */
+ 
+.card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 36px;
+    border-radius: 20px;
+    box-shadow: 0 4px 32px rgba(94, 185, 224, 0.12);
+    border: 1px solid rgba(127, 200, 227, 0.3);
+    text-align: center;
+}
+ 
+/* Role badge no topo do card */
+#selected-role {
+    display: inline-block;
+    background: rgba(191, 233, 255, 0.35);
+    border: 1px solid rgba(127, 200, 227, 0.45);
+    color: #2a7fa5;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 99px;
+    margin-bottom: 6px;
+}
+ 
+/* ===================== TABS ===================== */
+ 
+.tabs {
+    display: flex;
+    gap: 0;
+    margin: 20px 0 28px;
+    background: #f2f8fc;
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px solid rgba(127, 200, 227, 0.2);
+}
+ 
+.tabs button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #7a9fb5;
+    transition: all 0.25s ease;
+}
+ 
+.tabs button.active {
+    background: #ffffff;
+    color: #1f3b4d;
+    box-shadow: 0 1px 6px rgba(94, 185, 224, 0.18);
+}
+ 
+/* ===================== FORM ===================== */
+ 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+}
+ 
+form h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f3b4d;
+    margin-bottom: 4px;
+    text-align: left;
+}
+ 
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+ 
+.input-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #7a9fb5;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+ 
+input {
+    padding: 12px 14px;
+    border: 1px solid #daeef8;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    color: #1f3b4d;
+    background: #fafdff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+}
+ 
+input::placeholder {
+    color: #b0cdd9;
+}
+ 
+input:focus {
+    border-color: #7ec8e3;
+    box-shadow: 0 0 0 3px rgba(126, 200, 227, 0.12);
+    background: #ffffff;
+}
+ 
+form button[type="submit"] {
+    margin-top: 6px;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #bfe9ff;
+    color: #1f3b4d;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+    box-shadow: 0 2px 10px rgba(94, 185, 224, 0.2);
+    letter-spacing: 0.02em;
+}
+ 
+form button[type="submit"]:hover {
+    background: #9ddaf5;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(94, 185, 224, 0.28);
+}
+ 
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 2px 0;
+}
+ 
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #daeef8;
+}
+ 
+.divider span {
+    font-size: 11px;
+    color: #b0cdd9;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+ 
+/* ===================== MENSAGENS ===================== */
+ 
+.error {
+    color: #c0392b;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: -4px;
+}
+ 
+.success {
+    color: #27ae60;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: -4px;
+}
+ 
+.hidden {
+    display: none;
+}
+ 
+/* ===================== RESPONSIVE ===================== */
+ 
+@media (max-width: 768px) {
+    header {
+        justify-content: center;
+    }
+ 
+    #logo {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+    }
+ 
+    main {
+        padding: 25px 15px;
+        align-items: flex-start;
+    }
+ 
+    .choice-title {
+        font-size: 26px;
+        margin-top: 20px;
+        margin-bottom: 25px;
+        top: 0;
+    }
+ 
+    .roles-container {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+ 
+    .direcao {
+        grid-column: auto;
+    }
+ 
+    .role-card {
+        max-width: 100%;
+        width: 100%;
+        height: 170px;
+    }
+ 
+    .overlay h3 {
+        font-size: 30px;
+    }
+ 
+    .card {
+        max-width: 100%;
+        padding: 28px 20px;
+    }
+ 
+    .tabs {
+        flex-direction: row;
+    }
+ 
+    input,
+    form button[type="submit"] {
+        font-size: 15px;
+    }
+}
+ 
+@media (max-width: 480px) {
+    .card {
+        padding: 24px 16px;
+    }
+}
