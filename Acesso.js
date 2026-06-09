@@ -83,7 +83,7 @@ function fazerLogin(cpf, password, role) {
         if (userFound) {
             salvarUsuarioLogado("Direção", { id: userFound.id, nome: userFound.nome, cpf: userFound.cpf });
             // REDIRECIONAR PARA PÁGINA DA DIREÇÃO
-            window.location.href = "Direcao.html";
+            window.location.href = "/Direcao/Direcao.html";
             return true;
         }
     }

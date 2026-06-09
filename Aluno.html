@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ClassTrack — Aluno</title>
+<link rel="stylesheet" href="Aluno.css"/>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loggedUser = localStorage.getItem('loggedUser');
+        if (!loggedUser) { window.location.href = 'index.html'; return; }
+        const userData = JSON.parse(loggedUser);
+        if (userData.role !== 'Aluno') {
+            if (userData.role === 'Professor') window.location.href = 'Professor.html';
+            else if (userData.role === 'Direção') window.location.href = 'Direcao.html';
+            else window.location.href = 'index.html';
+            return;
+        }
+        window.alunoLogado = userData;
+    });
+</script>
+</head>
+<body>
+ 
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="logo">
+    <img src="Assets/logoClass.png" alt="ClassTrack">
+  </div>
+  <div class="prof-chip">
+    <div class="avatar" id="aluno-avatar">JS</div>
+    <div>
+      <div class="prof-name" id="aluno-name">João Silva</div>
+      <div class="prof-role">Aluno</div>
+    </div>
+  </div>
+  <nav>
+    <a class="active" onclick="go('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <span>Início</span>
+    </a>
+    <a onclick="go('materias')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span>Matérias</span>
+    </a>
+    <a onclick="go('notas')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+      <span>Notas</span>
+    </a>
+    <a onclick="go('frequencia')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Frequência</span>
+    </a>
+    <a onclick="go('desempenho')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      <span>Desempenho</span>
+    </a>
+    <a onclick="go('ocorrencias')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span>Ocorrências</span>
+    </a>
+    <a onclick="go('alertas')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span>Alertas</span>
+      <span class="nav-badge" id="nav-badge">0</span>
+    </a>
+  </nav>
+  <div class="version">ClassTrack v1.0</div>
+</aside>
+ 
+<!-- TOPBAR -->
+<header id="topbar">
+  <div class="topbar-left">
+    <h2 id="page-title">Início</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="turma-info" id="topbar-turma"></div>
+    <div class="notif-btn" onclick="go('alertas')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span id="alerta-count">0</span>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="logout()" style="margin-left:10px; display:flex; align-items:center; gap:6px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sair
+    </button>
+  </div>
+</header>
+ 
+<!-- MAIN -->
+<main id="main">
+ 
+  <!-- ===== DASHBOARD ===== -->
+  <div id="page-dashboard" class="page active">
+    <div class="stat-row" id="dash-stats"></div>
+    <div class="dash-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            Desempenho por Matéria
+          </h3>
+        </div>
+        <div class="panel-body" id="dash-desempenho"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            Alertas Importantes
+          </h3>
+          <button class="btn btn-sm btn-outline" onclick="go('alertas')">Ver todos</button>
+        </div>
+        <div class="panel-body" id="dash-alertas"></div>
+      </div>
+    </div>
+    <div class="mt20">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Frequência por Matéria
+          </h3>
+        </div>
+        <div class="panel-body" id="dash-freq"></div>
+      </div>
+    </div>
+    <div class="mt20">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Últimas Ocorrências
+          </h3>
+          <button class="btn btn-sm btn-outline" onclick="go('ocorrencias')">Ver todas</button>
+        </div>
+        <div class="panel-body" id="dash-ocorrencias"></div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ===== MATÉRIAS ===== -->
+  <div id="page-materias" class="page">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Minhas Matérias
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="materias-grid" id="materias-grid"></div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ===== NOTAS ===== -->
+  <div id="page-notas" class="page">
+    <div class="stat-row" id="notas-stats"></div>
+    <div class="panel">
+      <div class="panel-head">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Minhas Notas
+        </h3>
+        <select id="filtro-disc-nota" onchange="renderNotas()">
+          <option value="">Todas as matérias</option>
+        </select>
+      </div>
+      <div class="tbl-wrap">
+        <table id="tbl-notas">
+          <thead><tr><th>Matéria</th><th>Avaliação</th><th>Nota</th><th>Situação</th><th>Observação</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ===== FREQUÊNCIA ===== -->
+  <div id="page-frequencia" class="page">
+    <div class="stat-row" id="freq-stats"></div>
+    <div class="panel">
+      <div class="panel-head">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Histórico de Frequência
+        </h3>
+        <select id="filtro-disc-freq" onchange="renderFreq()">
+          <option value="">Todas as matérias</option>
+        </select>
+      </div>
+      <div class="tbl-wrap">
+        <table id="tbl-freq">
+          <thead><tr><th>Data</th><th>Matéria</th><th>Situação</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ===== DESEMPENHO ===== -->
+  <div id="page-desempenho" class="page">
+    <div class="stat-row" id="desemp-stats"></div>
+    <div class="dash-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+            Médias por Matéria
+          </h3>
+        </div>
+        <div class="panel-body" id="desemp-medias"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Frequência por Matéria
+          </h3>
+        </div>
+        <div class="panel-body" id="desemp-freq"></div>
+      </div>
+    </div>
+    <div class="mt20">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Resumo Geral do Semestre
+          </h3>
+        </div>
+        <div class="panel-body" id="desemp-resumo"></div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ===== OCORRÊNCIAS ===== -->
+  <div id="page-ocorrencias" class="page">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Minhas Ocorrências
+        </h3>
+      </div>
+      <div class="tbl-wrap">
+        <table id="tbl-ocorrencias">
+          <thead><tr><th>Data</th><th>Nível</th><th>Descrição</th><th>Professor</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ===== ALERTAS ===== -->
+  <div id="page-alertas" class="page">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3aafe0" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          Meus Alertas
+        </h3>
+        <select id="filtro-risco" onchange="renderAlertas()">
+          <option value="">Todos os riscos</option>
+          <option>Alto</option><option>Médio</option><option>Baixo</option>
+        </select>
+      </div>
+      <div class="tbl-wrap">
+        <table id="tbl-alertas">
+          <thead><tr><th>Data</th><th>Tipo</th><th>Risco</th><th>Descrição</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+</main>
+ 
+<div id="toast"></div>
+<script src="aluno.js"></script>
+</body>
+</html>

@@ -4,31 +4,46 @@
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
- 
+
 body {
-    background: #f0f8fd;
+    background: #F4F9FF;
     min-height: 100vh;
     overflow-x: hidden;
     color: #1f3b4d;
 }
- 
+
+.classtrack{
+    white-space: nowrap;
+}
+
+.class-dark{
+    color: #0A2A5E;
+    font-weight: 900;
+    letter-spacing: -3px;
+}
+
+.track-blue{
+    color: #1E4FFF;
+    font-weight: 900;
+    letter-spacing: -3px;
+}
 /* ===================== AURORA BACKGROUND ===================== */
- 
+
 .bg-aurora {
     position: fixed;
     inset: 0;
     z-index: 0;
-    background: #f0f8fd;
+    background: #ffffff;
     overflow: hidden;
 }
- 
+
 .aurora-orb {
     position: absolute;
     border-radius: 50%;
     filter: blur(100px);
     opacity: 0.35;
 }
- 
+
 .orb1 {
     width: 600px;
     height: 600px;
@@ -37,7 +52,7 @@ body {
     left: -150px;
     animation: driftA 20s ease-in-out infinite;
 }
- 
+
 .orb2 {
     width: 500px;
     height: 500px;
@@ -46,7 +61,7 @@ body {
     right: -120px;
     animation: driftB 26s ease-in-out infinite;
 }
- 
+
 .orb3 {
     width: 350px;
     height: 350px;
@@ -56,24 +71,24 @@ body {
     transform: translateX(-50%);
     animation: driftC 32s ease-in-out infinite;
 }
- 
+
 @keyframes driftA {
     0%, 100% { transform: translate(0, 0); }
     50%       { transform: translate(30px, 20px); }
 }
- 
+
 @keyframes driftB {
     0%, 100% { transform: translate(0, 0); }
     50%       { transform: translate(-25px, -20px); }
 }
- 
+
 @keyframes driftC {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50%       { transform: translateX(-50%) translateY(-25px); }
 }
- 
+
 /* ===================== HEADER ===================== */
- 
+
 header {
     position: relative;
     z-index: 10;
@@ -88,20 +103,20 @@ header {
     justify-content: center;
     padding: 10px 30px;
 }
- 
+
 .header-inner {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
 }
- 
+
 .logo-link {
     display: flex;
     align-items: center;
     text-decoration: none;
 }
- 
+
 #logo {
     cursor: pointer;
     transition: transform 0.3s ease, filter 0.3s ease;
@@ -109,12 +124,12 @@ header {
     width: 155px;
     filter: drop-shadow(0 2px 8px rgba(94, 185, 224, 0.25));
 }
- 
+
 #logo:hover {
     transform: scale(1.05);
     filter: drop-shadow(0 4px 14px rgba(94, 185, 224, 0.45));
 }
- 
+
 .header-accent-line {
     width: 60px;
     height: 3px;
@@ -123,27 +138,25 @@ header {
     background-size: 200% 100%;
     animation: shimmerLine 3s ease-in-out infinite;
 }
- 
+
 @keyframes shimmerLine {
     0%   { background-position: 0% 50%; }
     50%  { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
- 
+
 /* ===================== MAIN ===================== */
- 
+
 main {
     position: relative;
     z-index: 5;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 80px;
-    padding: 60px 20px 80px;
+    gap: 0;
+    padding: 0;
 }
- 
-/* ===================== HERO ===================== */
- 
+
 .hero {
     width: 100%;
     max-width: 960px;
@@ -152,20 +165,21 @@ main {
     justify-content: space-between;
     gap: 40px;
     animation: fadeUp 0.7s ease both;
+    padding: 60px 20px;
 }
- 
+
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
 }
- 
+
 .hero-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 18px;
 }
- 
+
 .hero-title {
     font-size: 46px;
     font-weight: 800;
@@ -174,12 +188,12 @@ main {
     display: flex;
     flex-direction: column;
 }
- 
+
 .highlight {
     color: #3aafe0;
     margin-top: 10px;
 }
- 
+
 .hero-desc {
     margin-top: 25px;
     font-size: 17px;
@@ -187,43 +201,43 @@ main {
     line-height: 1.7;
     max-width: 480px;
 }
- 
+
 .cta-btn {
     display: inline-block;
     width: fit-content;
     padding: 14px 32px;
     margin-top: 20px;
-    background: #bfe9ff;
-    color: #1f3b4d;
+    background: #1E4FFF;
+    color: #ffffff;
     font-size: 16px;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 0;
     text-decoration: none;
     transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 16px rgba(94, 185, 224, 0.25);
 }
- 
+
 .cta-btn:hover {
     background: #8fd3f4;
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(94, 185, 224, 0.35);
 }
- 
+
 /* Visual cards flutuantes */
- 
+
 .hero-visual {
     flex-shrink: 0;
     position: relative;
     width: 320px;
     height: 340px;
 }
- 
+
 .visual-card {
     position: absolute;
     background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(127, 200, 227, 0.3);
-    border-radius: 22px;
+    border-radius: 0;
     box-shadow: 0 8px 24px rgba(94, 185, 224, 0.15);
     width: 150px;
     height: 130px;
@@ -233,31 +247,46 @@ main {
     justify-content: center;
     gap: 14px;
 }
- 
+
 .vc-icon { font-size: 28px; }
 .vc-label {
     font-size: 13px;
     font-weight: bold;
-    color: #2a7fa5;
+    color: #1E4FFF;
 }
- 
+
 .vc1 { top: 0; left: 0; animation: floatCard 5s ease-in-out infinite; }
 .vc2 { top: 70px; right: 0; animation: floatCard 5s ease-in-out infinite; animation-delay: -2s; }
 .vc3 { bottom: 0; left: 30px; animation: floatCard 5s ease-in-out infinite; animation-delay: -4s; }
- 
+
 @keyframes floatCard {
     0%, 100% { transform: translateY(0px); }
     50%       { transform: translateY(-10px); }
 }
- 
+
+/* ===================== GREY SECTION ===================== */
+
+.grey-section {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    background: #f3f4f6;
+    padding: 70px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 70px;
+    position: relative;
+    z-index: 5;
+}
+
 /* ===================== FEATURES ===================== */
- 
+
 .features {
     width: 100%;
     max-width: 960px;
-    padding: 0 16px;
+    padding: 0;
 }
- 
+
 .section-title {
     text-align: center;
     font-size: 28px;
@@ -265,71 +294,69 @@ main {
     color: #1f3b4d;
     margin-bottom: 36px;
 }
- 
+
 .features-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 18px;
 }
- 
+
 .feature-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(127, 200, 227, 0.25);
-    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8ed;
+    border-radius: 0;
     padding: 26px 20px;
     text-align: center;
-    box-shadow: 0 4px 18px rgba(94, 185, 224, 0.1);
+    box-shadow: 0 2px 10px rgba(31, 59, 77, 0.07);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
- 
+
 .feature-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 10px 30px rgba(94, 185, 224, 0.2);
+    box-shadow: 0 8px 24px rgba(31, 59, 77, 0.12);
 }
- 
+
 .feature-icon {
     margin-bottom: 12px;
 }
- 
+
 .feature-card h3 {
     font-size: 15px;
     font-weight: 700;
     color: #1f3b4d;
     margin-bottom: 10px;
 }
- 
+
 .feature-card p {
     font-size: 13px;
     color: #4a6a7c;
     line-height: 1.6;
 }
- 
+
 /* ===================== ABOUT ===================== */
- 
+
 .about {
     width: 100%;
     max-width: 960px;
     animation: fadeUp 0.7s ease 0.3s both;
 }
- 
+
 .about-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(127, 200, 227, 0.25);
-    border-radius: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8ed;
+    border-radius: 0;
     padding: 44px 50px;
-    box-shadow: 0 4px 24px rgba(94, 185, 224, 0.1);
+    box-shadow: 0 2px 10px rgba(31, 59, 77, 0.07);
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
- 
+
 .about-tag {
     display: inline-block;
     background: rgba(127, 200, 227, 0.2);
     border: 1px solid rgba(127, 200, 227, 0.45);
-    color: #2a7fa5;
+    color: #1E4FFF;
     font-size: 12px;
     font-weight: bold;
     letter-spacing: 0.08em;
@@ -338,26 +365,26 @@ main {
     width: fit-content;
     text-transform: uppercase;
 }
- 
+
 .about-card h2 {
     font-size: 26px;
     font-weight: 800;
     color: #1f3b4d;
     margin-bottom: 0;
 }
- 
+
 .about-card p {
     font-size: 15px;
     color: #4a6a7c;
     line-height: 1.75;
 }
- 
+
 .about-card strong {
     color: #1f3b4d;
 }
- 
+
 /* ===================== CTA FINAL ===================== */
- 
+
 .cta-section {
     width: 100%;
     max-width: 960px;
@@ -368,21 +395,21 @@ main {
     gap: 14px;
     animation: fadeUp 0.7s ease 0.45s both;
 }
- 
+
 .cta-section h2 {
     font-size: 30px;
     font-weight: 800;
     color: #1f3b4d;
     margin-bottom: 0;
 }
- 
+
 .cta-section p {
     font-size: 16px;
     color: #4a6a7c;
 }
- 
+
 /* ===================== FOOTER ===================== */
- 
+
 footer {
     position: relative;
     z-index: 5;
@@ -392,30 +419,31 @@ footer {
     color: #7a9fb5;
     border-top: 1px solid rgba(127, 200, 227, 0.2);
 }
- 
+
 /* ===================== RESPONSIVE ===================== */
- 
+
 @media (max-width: 900px) {
     .features-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
- 
+
 @media (max-width: 768px) {
     header { justify-content: center; }
- 
+
     #logo { width: 70px; height: 70px; object-fit: contain; }
- 
+
     .hero {
         flex-direction: column;
         text-align: center;
         align-items: center;
+        padding: 40px 16px;
     }
- 
+
     .hero-title { font-size: 34px; }
     .hero-desc { max-width: 100%; }
     .cta-btn { margin: 20px auto 0; }
- 
+
     .hero-visual {
         width: 100%;
         height: auto;
@@ -424,19 +452,19 @@ footer {
         gap: 16px;
         flex-wrap: wrap;
     }
- 
+
     .visual-card {
         position: static;
         animation: none;
         width: 140px;
         height: 120px;
     }
- 
+
     .about-card { padding: 28px 24px; }
- 
-    main { gap: 50px; padding: 40px 16px 60px; }
+
+    .grey-section { padding: 40px 16px; gap: 40px; }
 }
- 
+
 @media (max-width: 560px) {
     .features-grid { grid-template-columns: 1fr; }
     .hero-title { font-size: 28px; }

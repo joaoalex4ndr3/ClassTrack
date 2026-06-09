@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ClassTrack — Direção</title>
+<link rel="stylesheet" href="Direcao.css"/>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="logo">
+    <img src="../Assets/logoClass.png" alt="ClassTrack">
+  </div>
+  <div class="prof-chip">
+    <div class="avatar" id="direcao-avatar">DR</div>
+    <div>
+      <div class="prof-name" id="direcao-name">Direção</div>
+      <div class="prof-role">Administrador</div>
+    </div>
+  </div>
+  <nav>
+    <a class="nav-link active" onclick="carregarPagina('dashboard')">
+      <span>🏠 Início</span>
+    </a>
+    <a class="nav-link" onclick="carregarPagina('materias')">
+      <span>📚 Matérias</span>
+    </a>
+    <a class="nav-link" onclick="carregarPagina('professores')">
+      <span>👨‍🏫 Professores</span>
+    </a>
+    <a class="nav-link" onclick="carregarPagina('alunos')">
+      <span>👨‍🎓 Alunos</span>
+    </a>
+  </nav>
+  <div class="version">ClassTrack v1.0</div>
+</aside>
+
+<!-- TOPBAR -->
+<header id="topbar">
+  <h2 id="page-title">Início</h2>
+  <div class="topbar-right">
+    <button class="btn btn-outline btn-sm" onclick="logout()">Sair</button>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+  <!-- DASHBOARD -->
+  <div id="page-dashboard" class="page active">
+    <div class="stat-row" id="dash-stats"></div>
+    <div class="dash-grid">
+      <div class="panel">
+        <div class="panel-head"><h3>📚 Últimas Matérias</h3><button class="btn btn-sm btn-primary" onclick="carregarPagina('materias')">Ver todas</button></div>
+        <div class="panel-body" id="dash-materias"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>👨‍🏫 Últimos Professores</h3><button class="btn btn-sm btn-primary" onclick="carregarPagina('professores')">Ver todos</button></div>
+        <div class="panel-body" id="dash-professores"></div>
+      </div>
+    </div>
+    <div class="mt20">
+      <div class="panel">
+        <div class="panel-head"><h3>👨‍🎓 Últimos Alunos</h3><button class="btn btn-sm btn-primary" onclick="carregarPagina('alunos')">Ver todos</button></div>
+        <div class="panel-body" id="dash-alunos"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATÉRIAS -->
+  <div id="page-materias" class="page">
+    <div class="modulo-header">
+      <h2>📚 Gerenciar Matérias</h2>
+      <button class="btn btn-primary" onclick="abrirModalMateria()">+ Adicionar Matéria</button>
+    </div>
+    <div class="tabela-wrapper">
+      <table class="tabela">
+        <thead>
+          <tr><th>Nome</th><th>Descrição</th><th>Carga Horária</th><th>Ações</th></tr>
+        </thead>
+        <tbody id="lista-materias"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PROFESSORES -->
+  <div id="page-professores" class="page">
+    <div class="modulo-header">
+      <h2>👨‍🏫 Gerenciar Professores</h2>
+      <button class="btn btn-primary" onclick="abrirModalProfessor()">+ Adicionar Professor</button>
+    </div>
+    <div class="tabela-wrapper">
+      <table class="tabela">
+        <thead>
+          <tr><th>Nome</th><th>Email</th><th>Telefone</th><th>Matérias</th><th>Ações</th></tr>
+        </thead>
+        <tbody id="lista-professores"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ALUNOS -->
+  <div id="page-alunos" class="page">
+    <div class="modulo-header">
+      <h2>👨‍🎓 Gerenciar Alunos</h2>
+      <button class="btn btn-primary" onclick="abrirModalAluno()">+ Adicionar Aluno</button>
+    </div>
+    <div class="tabela-wrapper">
+      <table class="tabela">
+        <thead>
+          <tr><th>Nome</th><th>Email</th><th>Turma</th><th>Telefone</th><th>Data Matrícula</th><th>Ações</th></tr>
+        </thead>
+        <tbody id="lista-alunos"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- MODAL MATÉRIA -->
+<div id="modal-materia" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Adicionar/Editar Matéria</h3>
+      <button class="btn-close" onclick="fecharModalMateria()">×</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-materia" onsubmit="salvarMateria(event)">
+        <input type="hidden" id="materia-id">
+        <div class="form-group">
+          <label>Nome *</label>
+          <input type="text" id="materia-nome" placeholder="Ex: Matemática" required>
+        </div>
+        <div class="form-group">
+          <label>Descrição</label>
+          <input type="text" id="materia-descricao" placeholder="Descrição">
+        </div>
+        <div class="form-group">
+          <label>Carga Horária *</label>
+          <input type="number" id="materia-carga" placeholder="80" min="1" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" onclick="fecharModalMateria()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PROFESSOR -->
+<div id="modal-professor" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Adicionar/Editar Professor</h3>
+      <button class="btn-close" onclick="fecharModalProfessor()">×</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-professor" onsubmit="salvarProfessor(event)">
+        <input type="hidden" id="professor-id">
+        <div class="form-group">
+          <label>Nome *</label>
+          <input type="text" id="professor-nome" placeholder="Ex: Carlos Mendes" required>
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="professor-email" placeholder="carlos@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="tel" id="professor-telefone" placeholder="(11) 98765-4321">
+        </div>
+        <div class="form-group">
+          <label>Matérias *</label>
+          <select id="professor-materias-select" multiple required>
+          </select>
+          <small>Segure Ctrl para selecionar múltiplas</small>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" onclick="fecharModalProfessor()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ALUNO -->
+<div id="modal-aluno" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Adicionar/Editar Aluno</h3>
+      <button class="btn-close" onclick="fecharModalAluno()">×</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-aluno" onsubmit="salvarAluno(event)">
+        <input type="hidden" id="aluno-id">
+        <div class="form-group">
+          <label>Nome *</label>
+          <input type="text" id="aluno-nome" placeholder="Ex: João Silva" required>
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="aluno-email" placeholder="joao@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="tel" id="aluno-telefone" placeholder="(11) 98765-4321">
+        </div>
+        <div class="form-group">
+          <label>Turma *</label>
+          <input type="text" id="aluno-turma" placeholder="Ex: 1A" required>
+        </div>
+        <div class="form-group">
+          <label>Data Matrícula *</label>
+          <input type="date" id="aluno-data" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" onclick="fecharModalAluno()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="Direcao.js"></script>
+</body>
+</html>

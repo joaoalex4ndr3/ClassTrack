@@ -134,9 +134,8 @@ function atualizarNomeProfessor() {
 
 // ── LOGOUT ──────────────────────────────────────────
 function logout() {
-    localStorage.removeItem('loggedUser');
-    window.location.href = 'index.html';
-    toast('Logout realizado com sucesso!');
+    localStorage.removeItem("loggedUser");
+    window.location.href = "../index.html";
 }
 
 // ── HELPERS ──────────────────────────────────────────
