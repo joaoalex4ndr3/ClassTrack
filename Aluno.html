@@ -4,8 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ClassTrack — Aluno</title>
-<link rel="stylesheet" href="Aluno.css"/>
-<link rel="icon" type="image/png" href="Assets\favIcon.png">
+<link rel="stylesheet" href="aluno.css"/>
+<link rel="icon" type="image/png" href="assets\favIcon.png">
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -13,8 +13,8 @@
         if (!loggedUser) { window.location.href = 'index.html'; return; }
         const userData = JSON.parse(loggedUser);
         if (userData.role !== 'Aluno') {
-            if (userData.role === 'Professor') window.location.href = 'Professor.html';
-            else if (userData.role === 'Direção') window.location.href = 'Direcao.html';
+            if (userData.role === 'professor') window.location.href = 'professor.html';
+            else if (userData.role === 'direção') window.location.href = 'direcao.html';
             else window.location.href = 'index.html';
             return;
         }
@@ -27,7 +27,7 @@
 <!-- SIDEBAR -->
 <aside id="sidebar">
   <div class="logo">
-    <img src="Assets/logoClass.png" alt="ClassTrack">
+    <img src="assets/logoClass.png" alt="ClassTrack">
   </div>
   <div class="prof-chip">
     <div class="avatar" id="aluno-avatar">JS</div>
