@@ -5,225 +5,588 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ClassTrack — Direção</title>
 <link rel="stylesheet" href="Direcao.css"/>
+<link rel="icon" type="image/png" href="Assets\favIcon.png">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const loggedUser = localStorage.getItem('loggedUser');
+    if (!loggedUser) { window.location.href = '../index.html'; return; }
+    const userData = JSON.parse(loggedUser);
+    if (userData.role !== 'Direção') {
+      if (userData.role === 'Aluno') window.location.href = '../Aluno/Aluno.html';
+      else if (userData.role === 'Professor') window.location.href = '../Professor/Professor.html';
+      else window.location.href = '../index.html';
+      return;
+    }
+    window.direcaoLogado = userData;
+  });
+</script>
 </head>
 <body>
 
 <!-- SIDEBAR -->
 <aside id="sidebar">
   <div class="logo">
-    <img src="../Assets/logoClass.png" alt="ClassTrack">
+    <img src="../Assets/logoClass.png" alt="ClassTrack" style="height:54px;width:auto;object-fit:contain;display:block;margin:0 auto;">
   </div>
   <div class="prof-chip">
-    <div class="avatar" id="direcao-avatar">DR</div>
-    <div>
-      <div class="prof-name" id="direcao-name">Direção</div>
-      <div class="prof-role">Administrador</div>
+    <div class="avatar" id="dir-avatar">AD</div>
+    <div class="chip-info">
+      <div class="prof-name" id="dir-name">Administrador</div>
+      <div class="prof-role">Direção</div>
     </div>
   </div>
   <nav>
-    <a class="nav-link active" onclick="carregarPagina('dashboard')">
-      <span>🏠 Início</span>
+    <a class="active" onclick="go('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <span>Painel Geral</span>
     </a>
-    <a class="nav-link" onclick="carregarPagina('materias')">
-      <span>📚 Matérias</span>
+    <a onclick="go('alunos')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Alunos</span>
     </a>
-    <a class="nav-link" onclick="carregarPagina('professores')">
-      <span>👨‍🏫 Professores</span>
+    <a onclick="go('professores')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      <span>Professores</span>
     </a>
-    <a class="nav-link" onclick="carregarPagina('alunos')">
-      <span>👨‍🎓 Alunos</span>
+    <a onclick="go('turmas')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Turmas</span>
+    </a>
+    <a onclick="go('frequencias')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span>Frequências</span>
+    </a>
+    <a onclick="go('notas')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+      <span>Notas</span>
+    </a>
+    <a onclick="go('ocorrencias')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span>Ocorrências</span>
+    </a>
+    <a onclick="go('alertas')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span>Alertas</span>
+      <span class="nav-badge" id="nav-badge">0</span>
+    </a>
+    <a onclick="go('relatorios')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>Relatórios</span>
     </a>
   </nav>
   <div class="version">ClassTrack v1.0</div>
 </aside>
 
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
 <!-- TOPBAR -->
 <header id="topbar">
-  <h2 id="page-title">Início</h2>
+  <div class="topbar-left">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <h2 id="page-title">Painel Geral</h2>
+  </div>
   <div class="topbar-right">
-    <button class="btn btn-outline btn-sm" onclick="logout()">Sair</button>
+    <div class="search-container">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="global-search" placeholder="Buscar aluno ou professor..." class="search-input">
+    </div>
+    <div class="notif-btn" onclick="go('alertas')" title="Ver alertas">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span id="alerta-count">0</span>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="logout()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span class="btn-label">Sair</span>
+    </button>
   </div>
 </header>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <main id="main">
-  <!-- DASHBOARD -->
+
+  <!-- ===== DASHBOARD ===== -->
   <div id="page-dashboard" class="page active">
     <div class="stat-row" id="dash-stats"></div>
     <div class="dash-grid">
       <div class="panel">
-        <div class="panel-head"><h3>📚 Últimas Matérias</h3><button class="btn btn-sm btn-primary" onclick="carregarPagina('materias')">Ver todas</button></div>
-        <div class="panel-body" id="dash-materias"></div>
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" width="18" height="18"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            Desempenho Geral
+          </h3>
+        </div>
+        <div class="panel-body" id="dash-desempenho"></div>
       </div>
       <div class="panel">
-        <div class="panel-head"><h3>👨‍🏫 Últimos Professores</h3><button class="btn btn-sm btn-primary" onclick="carregarPagina('professores')">Ver todos</button></div>
-        <div class="panel-body" id="dash-professores"></div>
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" width="18" height="18"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            Alertas Recentes
+          </h3>
+          <button class="btn btn-sm btn-outline" onclick="go('alertas')">Ver todos</button>
+        </div>
+        <div class="panel-body" id="dash-alertas"></div>
+      </div>
+    </div>
+    <div class="dash-grid mt20">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" width="18" height="18"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            Alunos Críticos
+          </h3>
+          <button class="btn btn-sm btn-outline" onclick="go('alunos')">Ver alunos</button>
+        </div>
+        <div class="panel-body" id="dash-criticos"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" width="18" height="18"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Últimas Ocorrências
+          </h3>
+          <button class="btn btn-sm btn-outline" onclick="go('ocorrencias')">Ver todas</button>
+        </div>
+        <div class="panel-body" id="dash-ocorrencias"></div>
       </div>
     </div>
     <div class="mt20">
       <div class="panel">
-        <div class="panel-head"><h3>👨‍🎓 Últimos Alunos</h3><button class="btn btn-sm btn-primary" onclick="carregarPagina('alunos')">Ver todos</button></div>
-        <div class="panel-body" id="dash-alunos"></div>
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" width="18" height="18"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Visão por Turma
+          </h3>
+        </div>
+        <div class="panel-body" id="dash-turmas-visao"></div>
       </div>
     </div>
   </div>
 
-  <!-- MATÉRIAS -->
-  <div id="page-materias" class="page">
-    <div class="modulo-header">
-      <h2>📚 Gerenciar Matérias</h2>
-      <button class="btn btn-primary" onclick="abrirModalMateria()">+ Adicionar Matéria</button>
-    </div>
-    <div class="tabela-wrapper">
-      <table class="tabela">
-        <thead>
-          <tr><th>Nome</th><th>Descrição</th><th>Carga Horária</th><th>Ações</th></tr>
-        </thead>
-        <tbody id="lista-materias"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- PROFESSORES -->
-  <div id="page-professores" class="page">
-    <div class="modulo-header">
-      <h2>👨‍🏫 Gerenciar Professores</h2>
-      <button class="btn btn-primary" onclick="abrirModalProfessor()">+ Adicionar Professor</button>
-    </div>
-    <div class="tabela-wrapper">
-      <table class="tabela">
-        <thead>
-          <tr><th>Nome</th><th>Email</th><th>Telefone</th><th>Matérias</th><th>Ações</th></tr>
-        </thead>
-        <tbody id="lista-professores"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ALUNOS -->
+  <!-- ===== ALUNOS ===== -->
   <div id="page-alunos" class="page">
-    <div class="modulo-header">
-      <h2>👨‍🎓 Gerenciar Alunos</h2>
-      <button class="btn btn-primary" onclick="abrirModalAluno()">+ Adicionar Aluno</button>
+    <div class="search-bar">
+      <button class="btn btn-primary" onclick="openModal('modal-aluno'); modoAluno='novo'; limparFormAluno()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Novo Aluno
+      </button>
+      <select id="filtro-turma-aluno" onchange="renderAlunos()">
+        <option value="">Todas as turmas</option>
+      </select>
+      <select id="filtro-status-aluno" onchange="renderAlunos()">
+        <option value="">Todos os status</option>
+        <option>Ativo</option><option>Inativo</option><option>Trancado</option><option>Transferido</option>
+      </select>
+      <input type="text" id="busca-aluno" placeholder="Buscar por nome..." class="search-input-inline" oninput="renderAlunos()">
     </div>
-    <div class="tabela-wrapper">
-      <table class="tabela">
-        <thead>
-          <tr><th>Nome</th><th>Email</th><th>Turma</th><th>Telefone</th><th>Data Matrícula</th><th>Ações</th></tr>
-        </thead>
-        <tbody id="lista-alunos"></tbody>
-      </table>
+    <div class="panel">
+      <div class="tbl-wrap">
+        <table id="tbl-alunos">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Turma</th>
+              <th>Turno</th>
+              <th>Status</th>
+              <th>Faltas</th>
+              <th>Média</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
   </div>
+
+  <!-- ===== PROFESSORES ===== -->
+  <div id="page-professores" class="page">
+    <div class="search-bar">
+      <button class="btn btn-primary" onclick="openModal('modal-professor'); modoProf='novo'; limparFormProf()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Novo Professor
+      </button>
+      <input type="text" id="busca-prof" placeholder="Buscar por nome..." class="search-input-inline" oninput="renderProfessores()">
+    </div>
+    <div class="panel">
+      <div class="tbl-wrap">
+        <table id="tbl-professores">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Especialidade</th>
+              <th>Turmas</th>
+              <th>Disciplinas</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TURMAS ===== -->
+  <div id="page-turmas" class="page">
+    <div class="search-bar">
+      <select id="filtro-turno-turma" onchange="renderTurmas()">
+        <option value="">Todos os turnos</option>
+        <option>Matutino</option><option>Noturno</option><option>Vespertino</option>
+      </select>
+      <select id="filtro-ano-turma" onchange="renderTurmas()">
+        <option value="">Todos os anos</option>
+        <option>2024</option><option>2025</option>
+      </select>
+    </div>
+    <div class="panel">
+      <div class="tbl-wrap">
+        <table id="tbl-turmas">
+          <thead>
+            <tr>
+              <th>Turma</th>
+              <th>Ano</th>
+              <th>Turno</th>
+              <th>Alunos</th>
+              <th>Ativos</th>
+              <th>Média Geral</th>
+              <th>Freq. Média</th>
+              <th>Detalhes</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="turma-detalhe-section" class="mt20" style="display:none">
+      <div class="panel">
+        <div class="panel-head">
+          <h3 id="turma-detalhe-title">Detalhes da Turma</h3>
+          <button class="btn btn-sm btn-outline" onclick="document.getElementById('turma-detalhe-section').style.display='none'">Fechar</button>
+        </div>
+        <div class="panel-body" id="turma-detalhe-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FREQUÊNCIAS ===== -->
+  <div id="page-frequencias" class="page">
+    <div class="search-bar">
+      <select id="filtro-turma-freq" onchange="renderFrequencias()">
+        <option value="">Todas as turmas</option>
+      </select>
+      <select id="filtro-pres-freq" onchange="renderFrequencias()">
+        <option value="">Todas</option>
+        <option value="true">Presente</option>
+        <option value="false">Ausente</option>
+      </select>
+      <input type="text" id="busca-freq" placeholder="Buscar aluno..." class="search-input-inline" oninput="renderFrequencias()">
+    </div>
+    <div class="panel">
+      <div class="tbl-wrap">
+        <table id="tbl-frequencias">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Aluno</th>
+              <th>Turma</th>
+              <th>Disciplina</th>
+              <th>Presença</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== NOTAS ===== -->
+  <div id="page-notas" class="page">
+    <div class="search-bar">
+      <select id="filtro-turma-nota" onchange="renderNotasDir()">
+        <option value="">Todas as turmas</option>
+      </select>
+      <select id="filtro-aval-nota" onchange="renderNotasDir()">
+        <option value="">Todas as avaliações</option>
+        <option value="1">Avaliação 1</option>
+        <option value="2">Avaliação 2</option>
+        <option value="3">Avaliação 3</option>
+      </select>
+      <input type="text" id="busca-nota" placeholder="Buscar aluno..." class="search-input-inline" oninput="renderNotasDir()">
+    </div>
+    <div class="panel">
+      <div class="tbl-wrap">
+        <table id="tbl-notas-dir">
+          <thead>
+            <tr>
+              <th>Aluno</th>
+              <th>Turma</th>
+              <th>Avaliação</th>
+              <th>Nota</th>
+              <th>Situação</th>
+              <th>Observação</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== OCORRÊNCIAS ===== -->
+  <div id="page-ocorrencias" class="page">
+    <div class="search-bar">
+      <select id="filtro-nivel-oco" onchange="renderOcorrencias()">
+        <option value="">Todos os níveis</option>
+        <option>Leve</option><option>Moderado</option><option>Grave</option>
+      </select>
+      <select id="filtro-turma-oco" onchange="renderOcorrencias()">
+        <option value="">Todas as turmas</option>
+      </select>
+      <input type="text" id="busca-oco" placeholder="Buscar aluno ou descrição..." class="search-input-inline" oninput="renderOcorrencias()">
+    </div>
+    <div class="panel">
+      <div class="tbl-wrap">
+        <table id="tbl-ocorrencias">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Aluno</th>
+              <th>Turma</th>
+              <th>Nível</th>
+              <th>Descrição</th>
+              <th>Professor</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ALERTAS ===== -->
+  <div id="page-alertas" class="page">
+    <div class="search-bar">
+      <select id="filtro-tipo-alerta" onchange="renderAlertas()">
+        <option value="">Todos os tipos</option>
+        <option>Frequência</option><option>Nota</option><option>Comportamento</option>
+      </select>
+      <select id="filtro-risco-alerta" onchange="renderAlertas()">
+        <option value="">Todos os riscos</option>
+        <option>Alto</option><option>Médio</option><option>Baixo</option>
+      </select>
+      <select id="filtro-turma-alerta" onchange="renderAlertas()">
+        <option value="">Todas as turmas</option>
+      </select>
+    </div>
+    <div class="panel">
+      <div class="tbl-wrap">
+        <table id="tbl-alertas">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Aluno</th>
+              <th>Turma</th>
+              <th>Tipo</th>
+              <th>Risco</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RELATÓRIOS ===== -->
+  <div id="page-relatorios" class="page">
+    <div class="relatorio-grid">
+      <div class="panel relatorio-card" onclick="exportarAlunosCSV()">
+        <div class="panel-body relatorio-body">
+          <div class="relatorio-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="relatorio-info">
+            <div class="relatorio-title">Exportar Alunos</div>
+            <div class="relatorio-desc">Lista completa de alunos com status e turma</div>
+          </div>
+          <svg class="relatorio-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+      </div>
+      <div class="panel relatorio-card" onclick="exportarProfessoresCSV()">
+        <div class="panel-body relatorio-body">
+          <div class="relatorio-icon navy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <div class="relatorio-info">
+            <div class="relatorio-title">Exportar Professores</div>
+            <div class="relatorio-desc">Lista de professores, disciplinas e turmas</div>
+          </div>
+          <svg class="relatorio-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+      </div>
+      <div class="panel relatorio-card" onclick="exportarNotasCSVDir()">
+        <div class="panel-body relatorio-body">
+          <div class="relatorio-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+          </div>
+          <div class="relatorio-info">
+            <div class="relatorio-title">Exportar Notas</div>
+            <div class="relatorio-desc">Notas de todos os alunos por avaliação</div>
+          </div>
+          <svg class="relatorio-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+      </div>
+      <div class="panel relatorio-card" onclick="exportarFreqCSVDir()">
+        <div class="panel-body relatorio-body">
+          <div class="relatorio-icon yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="relatorio-info">
+            <div class="relatorio-title">Exportar Frequências</div>
+            <div class="relatorio-desc">Registros de presença de todas as turmas</div>
+          </div>
+          <svg class="relatorio-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+      </div>
+      <div class="panel relatorio-card" onclick="exportarOcorrenciasCSV()">
+        <div class="panel-body relatorio-body">
+          <div class="relatorio-icon red">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="relatorio-info">
+            <div class="relatorio-title">Exportar Ocorrências</div>
+            <div class="relatorio-desc">Histórico completo de ocorrências disciplinares</div>
+          </div>
+          <svg class="relatorio-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+      </div>
+      <div class="panel relatorio-card" onclick="exportarAlertasCSV()">
+        <div class="panel-body relatorio-body">
+          <div class="relatorio-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <div class="relatorio-info">
+            <div class="relatorio-title">Exportar Alertas</div>
+            <div class="relatorio-desc">Alertas e notificações gerados no sistema</div>
+          </div>
+          <svg class="relatorio-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt20">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" width="18" height="18"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Indicadores por Turma
+          </h3>
+        </div>
+        <div class="tbl-wrap">
+          <table id="tbl-relatorio-turmas">
+            <thead>
+              <tr>
+                <th>Turma</th>
+                <th>Total Alunos</th>
+                <th>Ativos</th>
+                <th>Média Geral</th>
+                <th>Freq. Média</th>
+                <th>Em Risco</th>
+                <th>Ocorrências</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
 
-<!-- MODAL MATÉRIA -->
-<div id="modal-materia" class="modal-overlay">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h3>Adicionar/Editar Matéria</h3>
-      <button class="btn-close" onclick="fecharModalMateria()">×</button>
+<!-- ===== MODALS ===== -->
+
+<!-- MODAL ALUNO -->
+<div class="modal-bg" id="modal-aluno">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-aluno-title">Novo Aluno</h3>
+      <button class="modal-close" onclick="closeModal('modal-aluno')">×</button>
     </div>
     <div class="modal-body">
-      <form id="form-materia" onsubmit="salvarMateria(event)">
-        <input type="hidden" id="materia-id">
-        <div class="form-group">
-          <label>Nome *</label>
-          <input type="text" id="materia-nome" placeholder="Ex: Matemática" required>
+      <input type="hidden" id="a-id">
+      <div class="form-grid">
+        <div class="form-group full"><label>Nome Completo</label><input id="a-nome" type="text" placeholder="Nome do aluno..."/></div>
+        <div class="form-group"><label>E-mail</label><input id="a-email" type="email" placeholder="email@exemplo.com"/></div>
+        <div class="form-group"><label>Telefone</label><input id="a-tel" type="text" placeholder="(00) 00000-0000"/></div>
+        <div class="form-group"><label>Turma</label><select id="a-turma"></select></div>
+        <div class="form-group"><label>Status</label>
+          <select id="a-status">
+            <option>Ativo</option><option>Inativo</option><option>Trancado</option><option>Transferido</option>
+          </select>
         </div>
-        <div class="form-group">
-          <label>Descrição</label>
-          <input type="text" id="materia-descricao" placeholder="Descrição">
-        </div>
-        <div class="form-group">
-          <label>Carga Horária *</label>
-          <input type="number" id="materia-carga" placeholder="80" min="1" required>
-        </div>
-        <div class="form-actions">
-          <button type="button" class="btn btn-outline" onclick="fecharModalMateria()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Salvar</button>
-        </div>
-      </form>
+        <div class="form-group"><label>Data de Nascimento</label><input id="a-nasc" type="date"/></div>
+        <div class="form-group"><label>CPF</label><input id="a-cpf" type="text" placeholder="000.000.000-00"/></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeModal('modal-aluno')">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarAluno()">Salvar</button>
     </div>
   </div>
 </div>
 
 <!-- MODAL PROFESSOR -->
-<div id="modal-professor" class="modal-overlay">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h3>Adicionar/Editar Professor</h3>
-      <button class="btn-close" onclick="fecharModalProfessor()">×</button>
+<div class="modal-bg" id="modal-professor">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-prof-title">Novo Professor</h3>
+      <button class="modal-close" onclick="closeModal('modal-professor')">×</button>
     </div>
     <div class="modal-body">
-      <form id="form-professor" onsubmit="salvarProfessor(event)">
-        <input type="hidden" id="professor-id">
-        <div class="form-group">
-          <label>Nome *</label>
-          <input type="text" id="professor-nome" placeholder="Ex: Carlos Mendes" required>
-        </div>
-        <div class="form-group">
-          <label>Email *</label>
-          <input type="email" id="professor-email" placeholder="carlos@email.com" required>
-        </div>
-        <div class="form-group">
-          <label>Telefone</label>
-          <input type="tel" id="professor-telefone" placeholder="(11) 98765-4321">
-        </div>
-        <div class="form-group">
-          <label>Matérias *</label>
-          <select id="professor-materias-select" multiple required>
-          </select>
-          <small>Segure Ctrl para selecionar múltiplas</small>
-        </div>
-        <div class="form-actions">
-          <button type="button" class="btn btn-outline" onclick="fecharModalProfessor()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Salvar</button>
-        </div>
-      </form>
+      <input type="hidden" id="p-id">
+      <div class="form-grid">
+        <div class="form-group full"><label>Nome Completo</label><input id="p-nome" type="text" placeholder="Nome do professor..."/></div>
+        <div class="form-group"><label>E-mail</label><input id="p-email" type="email" placeholder="email@escola.edu.br"/></div>
+        <div class="form-group"><label>Telefone</label><input id="p-tel" type="text" placeholder="(00) 00000-0000"/></div>
+        <div class="form-group full"><label>Especialidade</label><input id="p-esp" type="text" placeholder="Ex.: Matemática, Física..."/></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeModal('modal-professor')">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarProfessor()">Salvar</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL ALUNO -->
-<div id="modal-aluno" class="modal-overlay">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h3>Adicionar/Editar Aluno</h3>
-      <button class="btn-close" onclick="fecharModalAluno()">×</button>
+<!-- MODAL CONFIRM DELETE -->
+<div class="modal-bg" id="modal-confirm">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-head modal-head-danger">
+      <h3>Confirmar Exclusão</h3>
+      <button class="modal-close" onclick="closeModal('modal-confirm')">×</button>
     </div>
     <div class="modal-body">
-      <form id="form-aluno" onsubmit="salvarAluno(event)">
-        <input type="hidden" id="aluno-id">
-        <div class="form-group">
-          <label>Nome *</label>
-          <input type="text" id="aluno-nome" placeholder="Ex: João Silva" required>
+      <div class="confirm-body">
+        <div class="confirm-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
         </div>
-        <div class="form-group">
-          <label>Email *</label>
-          <input type="email" id="aluno-email" placeholder="joao@email.com" required>
-        </div>
-        <div class="form-group">
-          <label>Telefone</label>
-          <input type="tel" id="aluno-telefone" placeholder="(11) 98765-4321">
-        </div>
-        <div class="form-group">
-          <label>Turma *</label>
-          <input type="text" id="aluno-turma" placeholder="Ex: 1A" required>
-        </div>
-        <div class="form-group">
-          <label>Data Matrícula *</label>
-          <input type="date" id="aluno-data" required>
-        </div>
-        <div class="form-actions">
-          <button type="button" class="btn btn-outline" onclick="fecharModalAluno()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Salvar</button>
-        </div>
-      </form>
+        <p>Tem certeza que deseja excluir este registro? <strong>Esta ação não pode ser desfeita.</strong></p>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeModal('modal-confirm')">Cancelar</button>
+      <button class="btn btn-danger" id="btn-confirm-del">Excluir</button>
     </div>
   </div>
 </div>
 
+<div id="toast"></div>
 <script src="Direcao.js"></script>
 </body>
 </html>
