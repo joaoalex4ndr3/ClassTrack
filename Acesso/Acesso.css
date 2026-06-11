@@ -207,7 +207,7 @@ main {
 .aluno {
     background-image:
     linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
-    url('./Assets/estudanteClass.png');
+    url('../Assets/estudanteClass.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -216,7 +216,7 @@ main {
 .professor {
     background-image:
     linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
-    url('./Assets/professorClass.png');
+    url('../Assets/professorClass.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -225,7 +225,7 @@ main {
 .direcao {
     background-image:
     linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
-    url('./Assets/direcaoClass.png');
+    url('../Assets/direcaoClass.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

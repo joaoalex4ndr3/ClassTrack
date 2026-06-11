@@ -934,7 +934,7 @@ function exportarAlertasCSV() {
 // ── LOGOUT ────────────────────────────────────────────
 function logout() {
   localStorage.removeItem('loggedUser');
-  window.location.href = '../index.html';
+  window.location.href = '../Index/index.html';
 }
 
 // ── UPDATE NOME DIREÇÃO ───────────────────────────────

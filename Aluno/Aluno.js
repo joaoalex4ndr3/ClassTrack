@@ -166,7 +166,7 @@ function go(page) {
 // ── LOGOUT ───────────────────────────────────────────
 function logout() {
   localStorage.removeItem('loggedUser');
-  window.location.href = 'index.html';
+  window.location.href = '../Index/index.html';
 }
  
 // ── INIT UI ──────────────────────────────────────────

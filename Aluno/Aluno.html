@@ -4,20 +4,25 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ClassTrack — Aluno</title>
-<link rel="stylesheet" href="Aluno.css"/>
-<link rel="icon" type="image/png" href="Assets\FavIcon.png">
+<link rel="stylesheet" href="./Aluno.css"/>
+<link rel="icon" type="image/png" href="../Assets/favIcon.png">
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const loggedUser = localStorage.getItem('loggedUser');
-        if (!loggedUser) { window.location.href = 'Index.html'; return; }
-        const userData = JSON.parse(loggedUser);
-        if (userData.role !== 'Aluno') {
-            if (userData.role === 'Professor') window.location.href = 'Professor.html';
-            else if (userData.role === 'Direção') window.location.href = 'Direcao.html';
-            else window.location.href = 'Index.html';
+
+        if (!loggedUser) {
+            window.location.href = '../Index/index.html';
             return;
         }
+        const userData = JSON.parse(loggedUser);
+        if (userData.role !== 'Aluno') {
+            if (userData.role === 'Professor') window.location.href = '../Professor/Professor.html';
+            else if (userData.role === 'Direção') window.location.href = '../Direcao/Direcao.html';
+            else window.location.href = '../Index/index.html';
+            return;
+        }
+
         window.alunoLogado = userData;
     });
 </script>
@@ -27,7 +32,7 @@
 <!-- SIDEBAR -->
 <aside id="sidebar">
   <div class="logo">
-    <img src="assets/logoClass.png" alt="ClassTrack">
+    <img src="../Assets/logoClass.png" alt="ClassTrack">
   </div>
   <div class="prof-chip">
     <div class="avatar" id="aluno-avatar">JS</div>
@@ -278,6 +283,6 @@
 </main>
  
 <div id="toast"></div>
-<script src="Aluno.js"></script>
+<script src="./Aluno.js"></script>
 </body>
 </html>

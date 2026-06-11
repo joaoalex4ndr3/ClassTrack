@@ -4,18 +4,21 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ClassTrack — Professor</title>
-<link rel="stylesheet" href="/Professor/Professor.css"/>
-<link rel="icon" type="image/png" href="Assets\FavIcon.png">
+<link rel="stylesheet" href="./Professor.css"/>
+<link rel="icon" type="image/png" href="../Assets/favIcon.png">
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const loggedUser = localStorage.getItem('loggedUser');
-        if (!loggedUser) { window.location.href = 'Index.html'; return; }
+        if (!loggedUser) {
+            window.location.href = '../Index/index.html';
+            return;
+        }
         const userData = JSON.parse(loggedUser);
         if (userData.role !== 'Professor') {
-            if (userData.role === 'Aluno') window.location.href = 'Aluno.html';
-            else if (userData.role === 'Direção') window.location.href = 'Direcao.html';
-            else window.location.href = 'Index.html';
+            if (userData.role === 'Aluno') window.location.href = '../Aluno/Aluno.html';
+            else if (userData.role === 'Direção') window.location.href = '../Direcao/Direcao.html';
+            else window.location.href = '../Index/index.html';
             return;
         }
         window.professorLogado = userData;
@@ -345,6 +348,6 @@
 </div></div>
  
 <div id="toast"></div>
-<script src="/Professor/Professor.js"></script>
+<script src="./Professor.js"></script>
 </body>
 </html>
