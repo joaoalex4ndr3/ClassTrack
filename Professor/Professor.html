@@ -4,18 +4,18 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ClassTrack — Professor</title>
-<link rel="stylesheet" href="/professor/professor.css"/>
-<link rel="icon" type="image/png" href="qssets\favIcon.png">
+<link rel="stylesheet" href="/Professor/Professor.css"/>
+<link rel="icon" type="image/png" href="Assets\FavIcon.png">
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const loggedUser = localStorage.getItem('loggedUser');
-        if (!loggedUser) { window.location.href = 'index.html'; return; }
+        if (!loggedUser) { window.location.href = 'Index.html'; return; }
         const userData = JSON.parse(loggedUser);
-        if (userData.role !== 'professor') {
-            if (userData.role === 'aluno') window.location.href = 'aluno.html';
-            else if (userData.role === 'direção') window.location.href = 'direcao.html';
-            else window.location.href = 'index.html';
+        if (userData.role !== 'Professor') {
+            if (userData.role === 'Aluno') window.location.href = 'Aluno.html';
+            else if (userData.role === 'Direção') window.location.href = 'Direcao.html';
+            else window.location.href = 'Index.html';
             return;
         }
         window.professorLogado = userData;
@@ -27,7 +27,7 @@
 <!-- SIDEBAR -->
 <aside id="sidebar">
   <div class="logo">
-    <img src="../assets/logoClass.png" alt="ClassTrack" style="height:54px; width:auto; object-fit:contain; display:block; margin: 0 auto;">
+    <img src="../Assets/logoClass.png" alt="ClassTrack" style="height:54px; width:auto; object-fit:contain; display:block; margin: 0 auto;">
   </div>
   <div class="prof-chip">
     <div class="avatar" id="prof-avatar">CM</div>
@@ -345,6 +345,6 @@
 </div></div>
  
 <div id="toast"></div>
-<script src="/professor/professor.js"></script>
+<script src="/Professor/Professor.js"></script>
 </body>
 </html>
