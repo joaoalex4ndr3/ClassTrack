@@ -19,12 +19,15 @@ Dessa forma, cada branch concentra arquivos, códigos, documentações e impleme
 Exemplo de organização:
 
 ```txt
-main                 → Página principal e apresentação do sistema
-banco-de-dados       → Modelagem, documentação e ambiente com Docker
-logica-programacao   → Fluxogramas e lógica do sistema
-front-end            → Interfaces e funcionalidades visuais
-documentacao         → Materiais explicativos e entregas acadêmicas
+main                     → Página principal, boas-vindas e apresentação geral do sistema
+Banco-de-dados           → Modelagem do banco, documentação e ambiente com Docker
+Banner                   → Banner acadêmico utilizado na apresentação aberta do projeto
+Develop                  → Área de desenvolvimento e testes antes das versões finais
+Engenharia-de-software   → Documentações, requisitos, regras de negócio e organização do projeto
+Logica-de-programacao    → Fluxogramas, lógica do sistema e explicação dos processos
+Redes                    → Entregas e documentações relacionadas à disciplina de Redes
 ```
+
 
 Essa divisão ajuda no controle das versões e permite que cada parte do projeto seja avaliada separadamente.
 
