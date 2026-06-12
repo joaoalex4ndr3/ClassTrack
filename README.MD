@@ -1,8 +1,8 @@
 # ClassTrack
 
-Sistema Inteligente de Acompanhamento Escolar
-
 O ClassTrack é uma plataforma web desenvolvida para auxiliar o acompanhamento acadêmico de alunos, professores e direção escolar por meio de uma interface moderna, intuitiva e centralizada.
+
+Este repositório está organizado em branches separadas por matéria, facilitando a divisão, o desenvolvimento e a avaliação das entregas relacionadas a cada disciplina do projeto. Dessa forma, cada branch concentra os arquivos, códigos, documentações e implementações específicas de uma determinada área, mantendo o projeto mais organizado e fácil de acompanhar.
 
 O sistema foi criado com o objetivo de facilitar o monitoramento de frequência, notas, ocorrências e indicadores de desempenho escolar, permitindo uma gestão acadêmica mais eficiente, organizada e transparente.
 
