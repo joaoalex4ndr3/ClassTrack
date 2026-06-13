@@ -1,12 +1,12 @@
 
 ```markdown
-# 🗄️ ClassTrack - Banco de Dados
+# ClassTrack - Banco de Dados
 
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16+-blue.svg)](https://www.postgresql.org/)
 [![Version](https://img.shields.io/badge/Version-1.0-green.svg)]()
 [![Status](https://img.shields.io/badge/Status-Production-brightgreen.svg)]()
 
-## 📌 Sobre o Banco
+##  Sobre o Banco
 
 Banco de dados do sistema **ClassTrack** - Gestão Acadêmica.
 
@@ -19,7 +19,7 @@ Banco de dados do sistema **ClassTrack** - Gestão Acadêmica.
 
 ---
 
-## 📊 Estrutura do Banco
+##  Estrutura do Banco
 
 ### Tabelas (13 tabelas)
 
@@ -55,13 +55,13 @@ Disciplinas (1) ──< (N) Avaliacoes
 
 ---
 
-## 🔐 Perfis de Acesso
+##  Perfis de Acesso
 
 | Perfil | Tabela | Autenticação | Senha Padrão |
 |--------|--------|--------------|--------------|
-| 👨‍🎓 Aluno | `Alunos` | CPF + Senha | `123456` |
-| 👨‍🏫 Professor | `Professores` | Email + Senha | `123456` |
-| 🏢 Direção | `Direcao` | CPF + Senha | `123456` |
+|  Aluno | `Alunos` | CPF + Senha | `123456` |
+|  Professor | `Professores` | Email + Senha | `123456` |
+|  Direção | `Direcao` | CPF + Senha | `123456` |
 
 ---
 
@@ -92,7 +92,7 @@ SELECT COUNT(*) FROM Turmas; -- Verificar dados
 
 ---
 
-## 📋 Dicionário Rápido
+##  Dicionário Rápido
 
 ### Turmas
 | Campo | Tipo | Descrição |
@@ -147,7 +147,7 @@ SELECT COUNT(*) FROM Turmas; -- Verificar dados
 
 ---
 
-## 📝 Consultas Úteis
+##  Consultas Úteis
 
 ### Login dos Perfis
 
@@ -187,7 +187,7 @@ GROUP BY Nivel_risco;
 
 ---
 
-## 🛠️ Manutenção
+##  Manutenção
 
 ### Backup
 
@@ -222,7 +222,7 @@ CREATE INDEX idx_frequencias_data ON Frequencias(Data_frequencia);
 
 ---
 
-## ✅ Validações
+##  Validações
 
 ### Constraints CHECK
 
@@ -254,7 +254,7 @@ CHECK (Status IN ('Ativo', 'Inativo', 'Trancado', 'Transferido'));
 
 ---
 
-## 📦 Dados de Teste (Seed)
+##  Dados de Teste (Seed)
 
 ```sql
 -- Direção
