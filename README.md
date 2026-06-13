@@ -1,6 +1,6 @@
-# 📚 Projeto de Redes – Monitoramento do Desempenho Acadêmico de Estudantes
+#  Projeto de Redes – Monitoramento do Desempenho Acadêmico de Estudantes
 
-## 📖 Descrição do Projeto
+##  Descrição do Projeto
 
 Este projeto foi desenvolvido utilizando o Cisco Packet Tracer com o objetivo de simular a infraestrutura de rede de uma instituição de ensino. A proposta visa permitir o monitoramento do desempenho acadêmico dos estudantes por meio de uma rede estruturada, segmentada e segura.
 
@@ -8,7 +8,7 @@ A rede conecta setores administrativos, professores, laboratório de informátic
 
 ---
 
-# 🎯 Objetivos
+#  Objetivos
 
 * Implementar uma rede escolar funcional.
 * Permitir a comunicação entre diferentes setores da instituição.
@@ -20,7 +20,7 @@ A rede conecta setores administrativos, professores, laboratório de informátic
 
 ---
 
-# 🏢 Estrutura da Rede
+#  Estrutura da Rede
 
 A topologia é composta pelos seguintes dispositivos:
 
@@ -59,7 +59,7 @@ Conectados via notebooks utilizando rede Wi-Fi.
 
 ---
 
-# 🌐 Endereçamento IP
+#  Endereçamento IP
 
 ## VLAN 10 – Administração
 
@@ -85,7 +85,7 @@ Conectados via notebooks utilizando rede Wi-Fi.
 
 ---
 
-# 🔀 Configuração de VLANs
+#  Configuração de VLANs
 
 Foram criadas três VLANs para segmentação lógica da rede:
 
@@ -104,7 +104,7 @@ A utilização de VLANs permite:
 
 ---
 
-# 🔁 Roteamento Inter-VLAN
+#  Roteamento Inter-VLAN
 
 Foi utilizada a técnica Router-on-a-Stick através do Router3.
 
@@ -120,7 +120,7 @@ Essas subinterfaces permitem a comunicação entre dispositivos localizados em V
 
 ---
 
-# 🖥️ Serviços Implementados
+#  Serviços Implementados
 
 ## Servidor Acadêmico
 
@@ -148,7 +148,7 @@ Funções:
 
 ---
 
-# 📶 Rede Wireless
+#  Rede Wireless
 
 ## Access Point
 
@@ -166,7 +166,7 @@ A rede sem fio permite mobilidade aos usuários e acesso aos serviços acadêmic
 
 ---
 
-# 🔒 Segurança Implementada
+#  Segurança Implementada
 
 * Segmentação por VLANs.
 * Utilização de WPA2 na rede sem fio.
@@ -175,7 +175,7 @@ A rede sem fio permite mobilidade aos usuários e acesso aos serviços acadêmic
 
 ---
 
-# 🧪 Testes Realizados
+#  Testes Realizados
 
 Durante a implementação foram realizados os seguintes testes:
 
@@ -209,7 +209,7 @@ Resultado: Sucesso.
 
 ---
 
-# 📈 Benefícios da Solução
+#  Benefícios da Solução
 
 * Organização da infraestrutura.
 * Facilidade de gerenciamento.
@@ -220,7 +220,7 @@ Resultado: Sucesso.
 
 ---
 
-# 🛠️ Ferramentas Utilizadas
+#  Ferramentas Utilizadas
 
 * Cisco Packet Tracer
 * VLAN
@@ -232,7 +232,7 @@ Resultado: Sucesso.
 
 ---
 
-# 👨‍🎓 Autor
+#  Autor
 
 Kaiki Santos
 
